@@ -99,24 +99,31 @@ class SParameter():
         # determine the rotation angle from the offset for detuned short location
         idx_max = np.argmin(np.abs(self.cspar)) + offset
         idx_min = np.argmin(np.abs(self.cspar)) - offset
-        rotation = (np.angle(self.cspar[idx_min]) +
-                    np.angle(self.cspar[idx_max])) / 2
 
-        # find the detuned short position
+        ang_min = np.angle(self.cspar[idx_min])
+        ang_max = np.angle(self.cspar[idx_max])
+
+        # make sure angles are positive
+        if ang_min < 0 or ang_max < 0:
+            ang_min = ang_min + 2 * np.pi
+            ang_max = ang_max + 2 * np.pi
+
+        # find the rotation angle
+        rotation = (ang_min + ang_max) / 2
+
+        # The rotation angle must always result in 0 deg so that it can
+        # be added with 180 degrees in order to get dsp
+        rotation = rotation if rotation < 2 * np.pi else rotation - np.pi
+
         # Ae^(jphi-rot) = Acos(phi-rot) + jAsin(phi-rot)
-        # filter using Savgol filter
-        add_angle = 0
-        if rotation < 0:
-            add_angle = np.pi
-
         real_dsp = np.abs(self.cspar) * \
-            np.cos(np.angle(self.cspar) - rotation + add_angle)
-        real_dsp = savgol_filter(real_dsp, 51, 3)
+            np.cos(np.angle(self.cspar) - rotation + np.pi)
 
         imag_dsp = np.abs(self.cspar) * \
-            np.sin(np.angle(self.cspar) - rotation + add_angle)
-        imag_dsp = savgol_filter(imag_dsp, 51, 3)
+            np.sin(np.angle(self.cspar) - rotation + np.pi)
 
+        real_dsp = savgol_filter(real_dsp, 51, 3)
+        imag_dsp = savgol_filter(imag_dsp, 51, 3)
         return np.vectorize(complex)(real_dsp, imag_dsp)
 
     def get_dop(self):
