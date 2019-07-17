@@ -17,7 +17,12 @@ import os
 class SParameter():
     @staticmethod
     def get_impedance(cspar):
+        # 50 Ohm reference
         return (1 + cspar) / (1 - cspar) * 50
+
+    @staticmethod
+    def get_normalized_impedance(cspar):
+        return SParameter.get_impedance(cspar) / 50
 
     @staticmethod
     def get_admittance(cspar):
