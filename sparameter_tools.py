@@ -49,7 +49,6 @@ def get_unloaded_q(sparam):
 
     delta_f_u = np.abs(f5 - f6)
     return f_res / delta_f_u, delta_f_u
-    #print('Qu: ', Qu, '∆fu: ', delta_f_u, 'MHz')
 
 
 def get_loaded_q(sparam):
@@ -61,19 +60,15 @@ def get_loaded_q(sparam):
     delta_f_l = np.abs(f1 - f2)
     return f_res / delta_f_l, delta_f_l
 
-    #print('Ql: ', Ql, '∆fl: ', delta_f_l, 'MHz')
-
 
 def calc_ext_q(Qu, Ql):
     # Calculate the external Q from the other two Qs
     return 1 / (1 / Ql - 1 / Qu)
-    # print('Qext_calc: ', Qext_calc)
 
 
 def calc_beta(Qu, Qext):
     # Calculate the coupling factor
     return Qu / Qext
-    # print('beta_calc', beta_calc)
 
 
 def get_info_txt(Qu, delta_f_u, Ql, delta_f_l, f_res, beta_calc):

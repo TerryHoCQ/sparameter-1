@@ -8,7 +8,7 @@ Xaratustrah 2019
 """
 import sys
 from sparameter import SParameter
-from tools import *
+from sparameter_tools import *
 from plotters import *
 
 with open('results.txt', 'a') as the_file:

@@ -17,11 +17,12 @@ import os
 class SParameter():
     @staticmethod
     def get_impedance(cspar):
-        # 50 Ohm reference
+        # center of smith chart is 50 ohm
         return (1 + cspar) / (1 - cspar) * 50
 
     @staticmethod
     def get_normalized_impedance(cspar):
+        # center of smith chart is 1
         return SParameter.get_impedance(cspar) / 50
 
     @staticmethod
