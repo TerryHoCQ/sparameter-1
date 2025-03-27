@@ -4,19 +4,19 @@ Plotters for different S parameters operations
 
 """
 import matplotlib.pyplot as plt
-from smithplot import SmithAxes
+from pysmithchart import S_PARAMETER
 
 
-def plot_smith(sparam, info_txt=None):
+def plot_smith(sparam, info_txt=None, filename=None):
     # Plot section
     plt.figure()  # figsize=(6, 6))
-    ax = plt.subplot(1, 1, 1, projection='smith', grid_minor_enable=True)
-    plt.plot(sparam.cspar, markevery=10, label='Measurement data',
-             datatype=SmithAxes.S_PARAMETER)
-    plt.plot(sparam.get_dsp(), markevery=10, label='Detuned short position',
-             datatype=SmithAxes.S_PARAMETER)
-    plt.plot(sparam.get_dop(), markevery=10, label='Detuned open position',
-             datatype=SmithAxes.S_PARAMETER)
+    ax = plt.subplot(1, 1, 1, projection='smith', grid_minor_enable=True, grid_major_color_x='red', grid_major_color_y='blue')
+    ax.plot(sparam.cspar, markevery=10, label='Measurement data',
+             datatype=S_PARAMETER)
+    ax.plot(sparam.get_dsp(), markevery=10, label='Detuned short position',
+             datatype=S_PARAMETER)
+    ax.plot(sparam.get_dop(), markevery=10, label='Detuned open position',
+             datatype=S_PARAMETER)
     plt.legend(loc="lower right", fontsize=8)
     plt.title(sparam.file_basename_wo_ext)
     plt.text(0, 0.6, info_txt, size=9, rotation=0,
@@ -27,9 +27,10 @@ def plot_smith(sparam, info_txt=None):
                        )
              )
 
-    plt.savefig("{}.png".format(sparam.filename_wo_ext),
-                format="png",
-                dpi=600,
-                bbox_inches="tight",)
+    if filename:    
+        plt.savefig("{}.png".format(sparam.filename_wo_ext),
+                    format="png",
+                    dpi=600,
+                    bbox_inches="tight",)
 
     plt.clf()

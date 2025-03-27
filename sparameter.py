@@ -93,7 +93,7 @@ class SParameter():
         """
         Get detuned short position
         """
-        offset = 50
+        offset = 10
         # determine the rotation angle from the offset for detuned short location
         idx_max = np.argmin(np.abs(self.cspar)) + offset
         idx_min = np.argmin(np.abs(self.cspar)) - offset

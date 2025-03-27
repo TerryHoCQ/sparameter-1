@@ -12,7 +12,7 @@ from sparameter_tools import *
 from plotters import *
 
 with open('results.txt', 'a') as the_file:
-    the_file.write('#Qu, delta_f_u, Ql, delta_f_l, f_res, beta_calc\n')
+    the_file.write('#name, Qu, delta_f_u, Ql, delta_f_l, f_res, beta_calc\n')
     for filename in sys.argv[1:]:
         print('Filename: \n', filename)
         sp = SParameter(filename)
